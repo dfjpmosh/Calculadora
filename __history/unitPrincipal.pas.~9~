@@ -1,0 +1,117 @@
+unit unitPrincipal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+
+type
+  TForm1 = class(TForm)
+    txtResultado: TEdit;
+    btn7: TButton;
+    btn8: TButton;
+    btn9: TButton;
+    Button4: TButton;
+    btn4: TButton;
+    btn5: TButton;
+    btn6: TButton;
+    Button8: TButton;
+    btn1: TButton;
+    btn2: TButton;
+    btn3: TButton;
+    Button12: TButton;
+    btn0: TButton;
+    Button14: TButton;
+    Button15: TButton;
+    Button16: TButton;
+    procedure btnClick(Sender: TObject);
+    procedure txtResultadoKeyPress(Sender: TObject; var Key: Char);
+  private
+    procedure suma();
+    procedure escribeNumero(numero: string);
+
+    function esDigito(c: string): Boolean;
+
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+  resultado: double;
+  bandOp, bandPunto, bandCP: bool;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.btnClick(Sender: TObject);
+var
+  numero: string;
+begin
+  numero := (Sender as TButton).Caption;
+
+  escribeNumero(numero);
+end;
+
+procedure TForm1.suma();
+begin
+  bandOp := true;
+  resultado := resultado + StrToFloat(txtResultado.Text);
+  txtResultado.Text := FloatToStr(resultado);
+end;
+
+procedure TForm1.txtResultadoKeyPress(Sender: TObject; var Key: Char);
+var
+  iValue, iCode: Integer;
+begin
+  escribeNumero(Key);
+  Key := #0;
+end;
+
+function TForm1.esDigito(c: string): Boolean;
+begin
+  try
+    StrToInt(c);
+    Result := True;
+  except
+    Result := False;
+  end;
+end;
+
+procedure TForm1.escribeNumero(numero: string);
+var
+  aux: string;
+  iValue, iCode: Integer;
+begin
+  case numero[1] of
+    #8:
+    begin
+      aux := txtResultado.Text;
+      txtResultado.Text := aux.Substring(0, aux.Length - 1);
+    end;
+    '+': suma();
+    '.':
+      if not bandPunto then
+      begin
+        bandPunto := true;
+        //bandCP := true;
+        txtResultado.Text := txtResultado.Text + '.';
+      end;
+    else
+    begin
+      val(numero, iValue, iCode);
+      if iCode = 0 then
+      begin
+        if bandOp then
+        begin
+          bandOp := false;
+          txtResultado.Text := '';
+        end;
+      end;
+      txtResultado.Text := txtResultado.Text + numero;
+    end;
+  end;
+end;
+end.
