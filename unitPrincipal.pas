@@ -257,51 +257,15 @@ begin
     bNN := true;
     opAnterior := operador;
   end;
-
-
-
-  {*pos := txtResultado.SelStart;
-  //showMessage(IntToStr(pos));
-  aux := txtResultado.Text;
-
-  case numero[1] of
-    #8:
-    begin
-      clear();
-    end;
-    'C': clear();
-    'A': allClear();
-    '=': igual();
-    '+': suma();
-    '-': resta();
-    'x': multiplicacion();
-    '÷': division();
-    '.': punto(numero);
-    else
-    begin
-      val(numero, iValue, iCode);
-      if iCode = 0 then
-      begin
-        if bandOp then
-        begin
-          bandOp := false;
-          txtResultado.Text := '';
-          aux := '';
-        end;
-
-        txtResultado.Text := aux + numero;
-      end;
-    end;
-  end;
-
-
-  txtResultado.SelStart := aux.Length + 1;
-  txtResultado.SetFocus;*}
 end;
 
 procedure TForm1.calcular(n1: Double; n2: Double; Op: string);
 begin
   case Op[1] of
+    '+':
+    begin
+      resultado := n1 + n2;
+    end;
     '-':
     begin
       resultado := n1 - n2;
